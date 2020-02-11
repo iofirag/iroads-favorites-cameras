@@ -16,7 +16,8 @@ export default class HomeComponent extends Component<Props> {
   }
 
   private async init() {
-    const res = await fetch('https://mywebsite.com/mydata.json');
+    const res = await fetch('https://raw.githubusercontent.com/iofirag/iroads-favorites-cameras/master/config.json');
+    console.log(res)
     if (res) {
       const jsonRes = await res.json();
       this.iroadCamList = jsonRes.iroadCamList;
