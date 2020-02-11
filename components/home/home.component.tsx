@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Image, View, Text, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, Image, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
 import { CamItem } from '../../types';
 
