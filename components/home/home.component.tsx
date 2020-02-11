@@ -38,7 +38,7 @@ export default class HomeComponent extends Component<Props> {
     this.setState({
       ...this.setState,
       loadingStatus: LoadingStatus.Loaded,
-      loadingImage: jsonRes.loadingImageList[Utils.randomIntFromInterval(0, jsonRes?.loadingImageList?.length-1)],
+      loadingImage: jsonRes?.loadingImageList[Utils.randomIntFromInterval(0, jsonRes?.loadingImageList?.length-1)],
     })
     setTimeout(() => {
       this.setState({
