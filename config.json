@@ -1,0 +1,16 @@
+{
+  "iroadCamList": [
+    {
+      "camImg": "http://iroads.bvtech.co.il/upfiles/OHALIM/OHALIM.PNG",
+      "camTitle": "אמונים"
+    },
+    {
+      "camImg": "http://iroads.bvtech.co.il/upfiles/MODIININDUSTRY/MODIININDUSTRY.PNG",
+      "camTitle": "קסטינה"
+    },
+    {
+      "camImg": "http://iroads.bvtech.co.il/upfiles/TIKVA/tikva.png",
+      "camTitle": "תקווה"
+    }
+  ]
+}
