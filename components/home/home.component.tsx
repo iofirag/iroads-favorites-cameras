@@ -101,16 +101,9 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     height: 170,
     width: '100%',
-    // 
-    // flex: 1,
-    // resizeMode: 'contain',
-    // width: '100%',
-    // 
   },
   loadingImage: {
     flex: 1,
     resizeMode: 'cover',
-    // height: 500,
-    // width: '100%',
   }
 });
