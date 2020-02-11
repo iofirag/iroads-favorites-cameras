@@ -1,34 +1,38 @@
 import React, {Component} from 'react';
 import { StyleSheet, Image, View, Text, TouchableOpacity, Dimensions, FlatList } from 'react-native';
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
+import { CamItem } from '../../types';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
 export default class HomeComponent extends Component<Props> {
-  
-  private iroadCamList: {camImg: string, camTitle: string}[] = []
 
-  constructor(props) {
-    super(props)
+  state = {
+    iroadCamList: []
+  }
+
+  constructor() {
+    super(null)
     this.init();
   }
 
   private async init() {
     const res = await fetch('https://raw.githubusercontent.com/iofirag/iroads-favorites-cameras/master/config.json');
-    console.log(res)
     if (res) {
       const jsonRes = await res.json();
-      this.iroadCamList = jsonRes.iroadCamList;
+      this.setState({
+        iroadCamList: jsonRes.iroadCamList
+      })
     }
   }
 
-  renderItem(item) {
+  renderItem(item: CamItem, index) {
     const { navigation } = this.props;
     return (
       <TouchableOpacity 
-        key={item.camTitle} 
+        key={index} 
         style={styles.camTouchableOpacity} 
         onPress={() => { 
           navigation.navigate('Viewer', {camTitle: item.camTitle})
@@ -44,8 +48,8 @@ export default class HomeComponent extends Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.iroadCamList}
-          renderItem={({ item }) => this.renderItem(item)}
+          data={this.state.iroadCamList}
+          renderItem={({ item, index }) => this.renderItem(item, index)}
         />
       </View>
     );
