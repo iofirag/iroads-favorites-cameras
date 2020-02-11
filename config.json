@@ -1,16 +1,28 @@
 {
   "iroadCamList": [
     {
-      "camImg": "http://iroads.bvtech.co.il/upfiles/OHALIM/OHALIM.PNG",
-      "camTitle": "אמונים"
+      "camImg": "http://iroads.bvtech.co.il/upfiles/MORASHA/MORASHA.PNG",
+      "camTitle": "מורשה"
     },
     {
-      "camImg": "http://iroads.bvtech.co.il/upfiles/MODIININDUSTRY/MODIININDUSTRY.PNG",
-      "camTitle": "קסטינה"
+      "camImg": "http://iroads.bvtech.co.il/upfiles/BARILAN/barilan.png",
+      "camTitle": "בר אילן"
     },
     {
-      "camImg": "http://iroads.bvtech.co.il/upfiles/TIKVA/tikva.png",
-      "camTitle": "תקווה"
+      "camImg": "http://iroads.bvtech.co.il/upfiles/ALUFSADE/ALUFSADE.PNG",
+      "camTitle": "אלוף שדה"
+    },
+    {
+      "camImg": "http://iroads.bvtech.co.il/upfiles/MESUBIM/mesubim.PNG",
+      "camTitle": "מסובים"
+    },
+    {
+      "camImg": "http://iroads.bvtech.co.il/upfiles/HASHIVA/HASHIVA_2.PNG",
+      "camTitle": "השבעה"
+    },
+    {
+      "camImg": "http://iroads.bvtech.co.il/upfiles/RISHONLEZION/rishonlezion.png",
+      "camTitle": "ראשון לציון"
     }
   ],
   "loadingImageList": [
