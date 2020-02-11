@@ -14,7 +14,6 @@ export default class HomeComponent extends Component<Props> {
     iroadCamList: [],
     loadingImage: '',
     loadingStatus: LoadingStatus.None,
-    showImage: false
   }
 
   constructor(props) {
@@ -23,7 +22,11 @@ export default class HomeComponent extends Component<Props> {
   }
 
   private async init() {
-    await this.getConfiguration();
+    try {
+      await this.getConfiguration();
+    } catch(error) {
+      console.error(error);
+    }
   }
 
   private async getConfiguration() {
@@ -35,14 +38,13 @@ export default class HomeComponent extends Component<Props> {
     this.setState({
       ...this.setState,
       loadingStatus: LoadingStatus.Loaded,
-      showImage: true,
-      loadingImage: jsonRes.loadingImage[Utils.randomIntFromInterval(0, jsonRes.loadingImage.length-1)],
+      loadingImage: jsonRes.loadingImageList[Utils.randomIntFromInterval(0, jsonRes?.loadingImageList?.length-1)],
     })
     setTimeout(() => {
       this.setState({
         ...this.state,
         iroadCamList: jsonRes.iroadCamList,
-        showImage: false
+        loadingStatus: LoadingStatus.Done,
       })
     }, 2000);
   }
@@ -67,7 +69,7 @@ export default class HomeComponent extends Component<Props> {
     return (
       <View style={styles.container}>
         {
-          !this.state.showImage ?
+          this.state.loadingStatus === LoadingStatus.Done ?
             <FlatList
               data={this.state.iroadCamList}
               renderItem={({ item, index }) => this.renderItem(item, index)}

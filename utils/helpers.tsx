@@ -5,10 +5,10 @@ export function randomIntFromInterval(min, max) { // min and max included
 }
 
 export async function getConfiguration() {
-  try {
+  // try {
     const res = await fetch(ConfigFilePath);
     return await res.json();
-  } catch (error) {
-    console.error(error);
-  }
+  // } catch (error) {
+    // console.error(error);
+  // }
 }
