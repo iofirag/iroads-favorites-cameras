@@ -13,8 +13,12 @@
       "android",
       "web"
     ],
+    "ios": {
+      "bundleIdentifier": "com.oa.iroadsviewer",
+      "buildNumber": "1.0.0"
+    },
     "android": {
-      "package": "com.yourcompany.yourappname",
+      "package": "com.oa.iroadsviewer",
       "versionCode": 1
     }
   }
