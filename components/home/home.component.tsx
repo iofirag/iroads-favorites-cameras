@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Image, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
-import { CamItem } from '../../types';
+import { CamItem, LoadingStatus } from '../../types';
+import * as Utils from '../../utils/helpers';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -10,36 +11,54 @@ interface Props {
 export default class HomeComponent extends Component<Props> {
 
   state = {
-    iroadCamList: []
+    iroadCamList: [],
+    loadingImage: '',
+    loadingStatus: LoadingStatus.None,
+    showImage: false
   }
 
-  constructor() {
-    super(null)
+  constructor(props) {
+    super(props)
     this.init();
   }
 
   private async init() {
-    const res = await fetch('https://raw.githubusercontent.com/iofirag/iroads-favorites-cameras/master/config.json');
-    if (res) {
-      const jsonRes = await res.json();
+    await this.getConfiguration();
+  }
+
+  private async getConfiguration() {
+    this.setState({
+      ...this.setState,
+      loadingStatus: LoadingStatus.Loading
+    });
+    const jsonRes = await Utils.getConfiguration();
+    this.setState({
+      ...this.setState,
+      loadingStatus: LoadingStatus.Loaded,
+      showImage: true,
+      loadingImage: jsonRes.loadingImage[Utils.randomIntFromInterval(0, jsonRes.loadingImage.length-1)],
+    })
+    setTimeout(() => {
       this.setState({
-        iroadCamList: jsonRes.iroadCamList
+        ...this.state,
+        iroadCamList: jsonRes.iroadCamList,
+        showImage: false
       })
-    }
+    }, 2000);
   }
 
   renderItem(item: CamItem, index) {
     const { navigation } = this.props;
     return (
       <TouchableOpacity 
-        key={index} 
+        key={'touchableOpacity'+index} 
         style={styles.camTouchableOpacity} 
         onPress={() => { 
           navigation.navigate('Viewer', {camTitle: item.camTitle})
         }}>
         
-        <Text style={styles.camText}>{item.camTitle}</Text>
-        <Image source={{uri: item.camImg}} style={styles.camImage}/>
+        <Text key={'text'+index} style={styles.camText}>{item.camTitle}</Text>
+        <Image key={'image'+index} source={{uri: item.camImg}} style={styles.camImage}/>
       </TouchableOpacity>
     )
   }
@@ -47,10 +66,15 @@ export default class HomeComponent extends Component<Props> {
   render = () => {
     return (
       <View style={styles.container}>
-        <FlatList
-          data={this.state.iroadCamList}
-          renderItem={({ item, index }) => this.renderItem(item, index)}
-        />
+        {
+          !this.state.showImage ?
+            <FlatList
+              data={this.state.iroadCamList}
+              renderItem={({ item, index }) => this.renderItem(item, index)}
+            />
+            :
+            <Image source={{uri: this.state.loadingImage}} style={styles.loadingImage}/>
+        }
       </View>
     );
   }
@@ -58,6 +82,7 @@ export default class HomeComponent extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
   },
   camTouchableOpacity: {
@@ -79,5 +104,11 @@ const styles = StyleSheet.create({
     // resizeMode: 'contain',
     // width: '100%',
     // 
+  },
+  loadingImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    // height: 500,
+    // width: '100%',
   }
 });

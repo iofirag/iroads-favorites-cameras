@@ -1,0 +1,1 @@
+export const ConfigFilePath: string = 'https://raw.githubusercontent.com/iofirag/iroads-favorites-cameras/master/config.json';
