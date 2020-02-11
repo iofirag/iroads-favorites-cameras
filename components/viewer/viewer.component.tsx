@@ -11,26 +11,37 @@ export default class ViewerComponent extends Component<Props> {
   
   private filterCameraByString(cameraTitle = '') {
     return `
-      var cameraTitle = '${cameraTitle}'
+      // Set text value and trigger keyup event
+      var cameraTitle = '${cameraTitle}';
       var searchInputEl = document.querySelector('.liveCamerasSection .searchInput');
       searchInputEl.value = cameraTitle;
+
+      var keyupTimeout;
+      searchInputEl.addEventListener('keyup', e => {
+        window.clearTimeout(keyupTimeout);
+        keyupTimeout = setTimeout(() => {          
+          
+          var camLiEl = document.querySelector('ul.row.camerasList .cam-item');
+          camLiEl.scrollIntoView();
+          var scrollTimeout;
+          window.addEventListener('scroll', e => {
+            window.clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {          
+
+              var camLinkEl = document.querySelector('ul.row.camerasList .cam-item .item');
+              camLinkEl.click();
+
+            }, 200);
+          })
+          
+        }, 200);
+      })
+
       if ("createEvent" in document) {
           var evt = document.createEvent("HTMLEvents");
           evt.initEvent("keyup", false, true);
           searchInputEl.dispatchEvent(evt);
       }
-
-      var scrollInterval;
-      scrollInterval = setInterval(() => {
-          var camAElList = document.querySelectorAll('ul.row.camerasList .cam-item .item');
-          if (camAElList.length === 1) {
-              clearInterval(scrollInterval)
-              camAElList[0].click();
-          }
-      }, 100);
-
-      var camLiEl = document.querySelector('ul.row.camerasList .cam-item');
-      camLiEl.scrollIntoViewIfNeeded();
     `
   }
   render = () => {
@@ -40,7 +51,7 @@ export default class ViewerComponent extends Component<Props> {
         scalesPageToFit={true}
         javaScriptEnabled={true}
         domStorageEnabled={true}
-        startInLoadingState={true}
+        startInLoadingState={false}
         mixedContentMode="always"
         injectedJavaScript={this.filterCameraByString(this.props.route.params.camTitle)}
         onError={console.error.bind(console, 'error')}
